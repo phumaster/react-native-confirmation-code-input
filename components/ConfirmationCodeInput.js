@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { View, TextInput, StyleSheet, Dimensions, ViewPropTypes } from 'react-native';
+import { View, TextInput, StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation } from 'react-native';
 import _ from 'lodash';
 
 // if ViewPropTypes is not defined fall back to View.propType (to support RN < 0.44)
@@ -74,7 +74,7 @@ export default class ConfirmationCodeInput extends Component {
     const isFulfilled = code.length === codeLength;
 
     this._fulfill(code, isFulfilled);
-
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.linear);
     this.setState({
       codeArr,
       currentIndex,
