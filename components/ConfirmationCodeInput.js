@@ -246,7 +246,7 @@ export default class ConfirmationCodeInput extends Component {
     }
 
     if(!text) {
-      this._onKeyPress({nativeEvent: {key: 'Backspace'});
+      this._onKeyPress({nativeEvent: {key: 'Backspace'}});
     } else {
       const fulfilled = index === codeLength;
       if (fulfilled) {
