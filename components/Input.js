@@ -11,10 +11,15 @@ class Input extends React.PureComponent {
     this.handleChangeText = this.handleChangeText.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.focus = this.focus.bind(this);
+    this.blur = this.blur.bind(this);
   }
 
   focus() {
     this.inputRef && this.inputRef.focus();
+  }
+
+blur() {
+    this.inputRef && this.inputRef.blur();
   }
 
   handleFocus() {
