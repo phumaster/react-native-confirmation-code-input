@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import KeyEvent from 'react-native-keyevent';
 import { View, TextInput, StyleSheet, Dimensions, ViewPropTypes, LayoutAnimation } from 'react-native';
 import _ from 'lodash';
 
@@ -54,18 +53,6 @@ export default class ConfirmationCodeInput extends Component {
   }
   
   componentDidMount() {
-    
-    KeyEvent.onKeyDownListener((keyEvent) => {
-      if(keyEvent.keyCode === 67) {
-        const eventInstance = {
-          nativeEvent: {
-            key: 'Backspace'
-          }
-        };
-        this._onKeyPress(eventInstance);
-      }
-    });
-    
     const { compareWithCode, codeLength, inputPosition } = this.props;
     if (compareWithCode && compareWithCode.length !== codeLength) {
       console.error("Invalid props: compareWith length is not equal to codeLength");
@@ -74,10 +61,6 @@ export default class ConfirmationCodeInput extends Component {
     if (_.indexOf(['center', 'left', 'right', 'full-width'], inputPosition) === -1) {
       console.error('Invalid input position. Must be in: center, left, right, full');
     }
-  }
-
-  componentWillUnmount() {
-    KeyEvent.removeKeyDownListener();
   }
   
   clear() {
@@ -262,11 +245,15 @@ export default class ConfirmationCodeInput extends Component {
       newCodeArr[index++] = charArray.shift();
     }
 
-    const fulfilled = index === codeLength;
-    if (fulfilled) {
-      this._blur(this.state.currentIndex);
+    if(!text) {
+      this._onKeyPress({nativeEvent: {key: 'Backspace'});
     } else {
-      this._setFocus(index);
+      const fulfilled = index === codeLength;
+      if (fulfilled) {
+        this._blur(this.state.currentIndex);
+      } else {
+        this._setFocus(index);
+      }
     }
 
     this._updateState(newCodeArr, index);
